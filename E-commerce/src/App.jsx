@@ -2,34 +2,47 @@ import ProductList from "./components/ProductList"
 import Navbar from './components/Navbar'
 import SearchBar from './components/SearchBar'
 import CategoryFilter from './components/CategoryFilter'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 function App() {
 
   const [cart,setCart] = useState([]);
   const [searchTerm,setSearchTerm] = useState("");
+  const [selectedCategory,setSelectedCategory] = useState("All");
+  const [products,setProducts] = useState([])
 
   const handleAddToCart = (product) => {
     setCart([...cart,product]);
   }
 
-  const products = [
-    {id:1,title:"Pen",price:"10rs",image:null,category:"stationary"},
-    {id:2,title:"Bottle",price:"999rs",image:null,category:"essentials"},
-    {id:3,title:"Earbuds",price:"3000rs",image:null,category:"electronics"},
-    {id:5,title:"Frame",price:"200rs",image:null,category:"Home decor"}
-  ]
+  useEffect( () => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://fakestoreapi.com/products')
+        const result = await response.json();
+        console.log(result);
+        setProducts(result);
+      } catch (error) {
+        console.error("Error fetching Data:", error);
+      }
+    }
+    fetchData();
+  } , []);
 
   const filteredProducts = products.filter((product) =>
-    product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    product.title.toLowerCase().includes(searchTerm.toLowerCase()) && 
+    (
+      selectedCategory === "all" ||
+      product.category.toLowerCase() === selectedCategory.toLowerCase()
+    )
   );
 
   return (
     <div className="min-h-screen bg-gray-100">   
       <Navbar cart={cart}/>
-      <div class = 'px-6 py-4'>
+      <div className = 'px-6 py-4'>
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <CategoryFilter/>
+        <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>
         <ProductList products={filteredProducts} handleAddToCart={handleAddToCart}/>
       </div>
     </div>
