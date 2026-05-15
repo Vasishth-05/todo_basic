@@ -3,7 +3,6 @@ import ProductCard from "./ProductCard";
 function ProductList({products , handleAddToCart}){
     return <div>
         <div className="flex flex-wrap gap-6 justify-center p-6 max-w-7xl mx-auto">
-            <h1>{products.length}</h1>
             {products.map((product,index) => (
                 <ProductCard key={index} product={product} handleAddToCart={handleAddToCart}/>
             ))} 
