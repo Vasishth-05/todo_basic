@@ -10,12 +10,17 @@ function App() {
     {
       id:1,
       title:"Learn React",
-      Status:"todo"
+      status:"todo"
     },
     {
       id:2,
       title:"Build Project",
-      Status:"doing"
+      status:"doing"
+    },
+    {
+      id:3,
+      title:"Deploy App",
+      status:"done"
     }
   ])
 
