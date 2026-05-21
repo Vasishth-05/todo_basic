@@ -26,14 +26,15 @@ function App() {
   const [isOpen,setIsOpen] = useState(false);
 
   function handleAddTask(newTask){
-    setTasks([])
+    setTasks([...tasks,newTask]);
+    return null;
   }
 
   return (
     <>
       <Header isOpen={isOpen} setIsOpen={setIsOpen} />
       <Board tasks={tasks}/>
-      <AddTaskModel isOpen={isOpen} setIsOpen={setIsOpen}/>
+      <AddTaskModel isOpen={isOpen} setIsOpen={setIsOpen} handleAddTask={handleAddTask} />
     </>
   )
 }
