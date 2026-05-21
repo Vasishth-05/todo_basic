@@ -23,12 +23,17 @@ function App() {
       status:"done"
     }
   ])
+  const [isOpen,setIsOpen] = useState(false);
+
+  function handleAddTask(newTask){
+    setTasks([])
+  }
 
   return (
     <>
-      <Header/>
+      <Header isOpen={isOpen} setIsOpen={setIsOpen} />
       <Board tasks={tasks}/>
-      <AddTaskModel/>
+      <AddTaskModel isOpen={isOpen} setIsOpen={setIsOpen}/>
     </>
   )
 }
